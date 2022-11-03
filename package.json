@@ -1,0 +1,22 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi generate",
+    "start": "nuxi preview"
+  },
+  "dependencies": {
+    "nuxt-edge": "latest",
+    "pinia": "^2.0.23"
+  },
+  "devDependencies": {
+    "@nuxt/bridge": "npm:@nuxt/bridge-edge",
+    "@nuxt/types": "latest",
+    "@pinia/nuxt": "^0.1.2",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^10.1.1"
+  }
+}
