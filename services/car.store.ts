@@ -1,30 +1,31 @@
 import { defineStore } from 'pinia';
-import { TruckInterface } from '~/interfaces/truck.interface';
+import { CarInterface } from '~/interfaces/car.interface';
 
-export const useTruckStore = defineStore('useTruckStore', {
+export const useCarStore = defineStore('useCarStore', {
   // arrow function recommended for full type inference
   state: () => {
     return {
-      truck: <TruckInterface>{},
-      trucks: <TruckInterface[]>[],
+      car: <CarInterface>{},
+      cars: <CarInterface[]>[],
     };
   },
   actions: {
-    /** add new truck
+    /** add new car
      * @param {Object} $data - The shape is the same as SpecialType above
-     * @param {Object} $data.truck - truck object
+     * @param {Object} $data.car - car object
      * @param {Function} $data.onSuccess - callback success 
      * @param {onError} $data.onError - callback error
      * @returns {onError|onSuccess} callback to run
      */
-    async useAddTruck($data:{truck:TruckInterface, onSuccess:Function, onError:Function} ) {      
+    async useAddCar($data:{car:CarInterface, onSuccess:Function, onError:Function} ) {     
       try {
-        const response: any = await fetch(`${this.$nuxt.$config.API}/users/1`, {
+        const response: any = await fetch(`${useNuxtApp().$config.API}/users/1`, {
           method: 'GET',
         });
-        const res = await response.json();
+        const json = await response.json();
+        const res = json.users
         if (response.status == 200) {
-          this.trucks.push($data.truck);
+          this.cars.push($data.car);
           return $data.onSuccess(res);
         } else {
           return $data.onError(res);
@@ -33,42 +34,45 @@ export const useTruckStore = defineStore('useTruckStore', {
         return $data.onError(e);
       }
     },
-    /** Get Track list
+    /** Get car list
      * @returns {void}
      */
-    async useGetTrucks() {
+    async useGetCars() {
       try {
-        const response: any = await fetch(`${this.$nuxt.$config.API}/users`, {
+        const response: any = await fetch(`${useNuxtApp().$config.API}/users`, {
             method: 'GET'
           }
         );
-        const res:Array<TruckInterface> = await response.json();
+        const json = await response.json();
+        const res:Array<CarInterface> = json.users.filter((a:any, index:number)=>index<9)
+        
         /** mock data */
         res.forEach((element:any) => {
-          element.vehicleNumber = element.address.zipcode;
-          element.owner = element.name;
-          element.trailerWeight = parseInt(element.phone.substring(0,3));
+          element.vehicleNumber = element.phone;
+          element.owner = `${element.firstName} ${element.lastName}`;
+          element.numberOfSeats = element.age;
+          element.price = element.height;
         });
-        this.trucks = res;
+        this.cars = res;
       } catch (e) {
         //
       }
     },
-    /** remove track 
+    /** remove car 
      * @param {Object} $data - The shape is the same as SpecialType above
-     * @param {number} $data.id - track id
+     * @param {number} $data.id - car id
      * @param {Function} $data.onSuccess - callback success 
      * @param {onError} $data.onError - callback error
      * @returns {onError|onSuccess} callback to run
      */
-    async useDeleteTruck($data: { id:number, onError:Function, onSuccess:Function }) {
+    async useDeleteCar($data: { id:number, onError:Function, onSuccess:Function }) {
       try {
-        const response: any = await fetch(`${this.$nuxt.$config.API}/users/1`, {
+        const response: any = await fetch(`${useNuxtApp().$config.API}/users/1`, {
             method: 'GET'
           }
         );
         if (response.status == 200) {
-          this.trucks=this.trucks.filter((a:any)=>a.id!=$data.id);
+          this.cars=this.cars.filter((a:any)=>a.id!=$data.id);
           return $data.onSuccess();
         } else {
           return $data.onError('error');

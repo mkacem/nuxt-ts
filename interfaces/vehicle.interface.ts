@@ -3,7 +3,7 @@
  *
  * @interface
  */
-export interface VehiculeInterface {
+export interface VehicleInterface  {
   id: number;
   vehicleNumber: string;
   price: number;

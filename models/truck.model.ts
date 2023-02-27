@@ -1,5 +1,5 @@
-import { Vehicle } from "./vehicule.model";
-import { useTruckStore as truckStore } from '@/store/truck.store';
+import { Vehicle } from "./vehicle.model";
+import { useTruckStore as truckStore } from '~/services/truck.store';
 import { TruckInterface } from "~/interfaces/truck.interface";
 
 /**
@@ -9,11 +9,11 @@ import { TruckInterface } from "~/interfaces/truck.interface";
 export class Truck extends Vehicle {
   private _trailerWeight: number;
   /**
-   * @param {number} id - vehicule identifier
-   * @param {string} vehicleNumber - vehicule number
-   * @param {number} price - price of vehicule
-   * @param {number} trailerWeight - number of seats in vehicule
-   * @param {string} owner - vehicule owner name
+   * @param {number} id - Vehicle identifier
+   * @param {string} vehicleNumber - Vehicle number
+   * @param {number} price - price of Vehicle
+   * @param {number} trailerWeight - number of seats in Vehicle
+   * @param {string} owner - Vehicle owner name
    */
   constructor(id: number, vehicleNumber: string, price: number,  trailerWeight: number, owner?:string) {
     super(id,vehicleNumber,price, owner);
@@ -26,24 +26,24 @@ export class Truck extends Vehicle {
   public get trailerWeight(): number {
     return this._trailerWeight;
   }
+  // * Setters
+  public set trailerWeight (trailerWeight: number) {
+    this._trailerWeight = trailerWeight;
+  }
   /**
    * List of trucks from store
    * @type {Array}
    */
   public get truckList(): TruckInterface[]{
     return truckStore().trucks;
-  }
-  // * Setters
-  public set trailerWeight (trailerWeight: number) {
-    this._trailerWeight = trailerWeight;
-  }
+  }  
   /**
    * Add truck to database
    * @return {void}.
    */
   public addTruck():void{
-    let id:any = this.truckList.at(-1)!=undefined?this.truckList.at(-1)?.id:0
-    let o:TruckInterface={
+    const id:any = this.truckList.at(-1)!=undefined?this.truckList.at(-1)?.id:0
+    const o:TruckInterface={
       id:id+1, 
       vehicleNumber:this.vehicleNumber, 
       price:this.price, 

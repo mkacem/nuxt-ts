@@ -1,4 +1,4 @@
-import { VehiculeInterface } from "./vehicule.interface";
+import { VehicleInterface } from "./vehicle.interface";
 /**
  * Interface for classes Car
  *
@@ -6,6 +6,6 @@ import { VehiculeInterface } from "./vehicule.interface";
  * @template T
  * @extends {VehiculeInterface<T>}
  */
-export interface CarInterface extends VehiculeInterface {
+export interface CarInterface extends VehicleInterface {
   numberOfSeats: number;
 }

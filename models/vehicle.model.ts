@@ -1,15 +1,15 @@
-import { VehiculeInterface } from "../interfaces/vehicule.interface";
-/** @implements {VehiculeInterface} */
-export class Vehicle implements VehiculeInterface {
+import { VehicleInterface } from "~/interfaces/vehicle.interface";
+/** @implements {VehicleInterface} */
+export abstract class Vehicle implements VehicleInterface {
   id: number;
   vehicleNumber: string;
   price: number;
   protected _owner:string;
   /**
-   * @param {number} id - vehicule identifier
-   * @param {string} vehicleNumber - vehicule number
-   * @param {number} price - price of vehicule
-   * @param {string} owner - vehicule owner name
+   * @param {number} id - Vehicle identifier
+   * @param {string} vehicleNumber - Vehicle number
+   * @param {number} price - price of Vehicle
+   * @param {string} owner - Vehicle owner name
    */
   constructor(id: number, vehicleNumber: string, price: number, owner?:string) {
     this.id = id;
@@ -18,7 +18,7 @@ export class Vehicle implements VehiculeInterface {
     this._owner = owner||'';
   }
   /**
-   * Vehicule owner name
+   * Vehicle owner name
    * @type {string}
    */
    public get owner():string {
@@ -36,7 +36,6 @@ export class Vehicle implements VehiculeInterface {
    * @return {string}.
    */
   public onSuccess(msg:object|string): string {
-    console.log(msg);
     return msg?.toString();
   }
   /**
